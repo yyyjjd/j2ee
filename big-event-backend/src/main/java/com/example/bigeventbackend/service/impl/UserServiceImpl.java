@@ -40,4 +40,24 @@ public class UserServiceImpl implements UserService {
         // 后面再完善登录逻辑（目前先简单返回成功）
         return Result.success("登录成功");
     }
+
+    // UserServiceImpl.java 新增方法
+    @Override
+    public Result findUserByUsername(String username) {
+        User user = userMapper.findByUsername(username);
+        if (user == null) {
+            return Result.error("用户不存在");
+        }
+        return Result.success(user);
+    }
+
+    @Override
+    public User findById(Integer id) {
+        return userMapper.findById(id);
+    }
+
+    @Override
+    public void update(User user) {
+        userMapper.update(user);
+    }
 }

@@ -12,4 +12,6 @@ public class User {
     private String email;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
+    // 头像地址
+    private String userPic;
 }

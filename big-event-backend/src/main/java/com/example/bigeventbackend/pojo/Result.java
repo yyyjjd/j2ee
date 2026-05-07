@@ -23,4 +23,7 @@ public class Result {
     public static Result error(String msg) {
         return new Result(1, msg, null);
     }
+
+    public void setPassword(Object o) {
+    }
 }

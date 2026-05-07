@@ -106,9 +106,11 @@ const articleList = async () => {
     }
     let result = await articleListService(params);
 
+    const listData = result.data || [];
+
     //渲染视图
-    total.value = result.data.total;
-    articles.value = result.data.items;
+  total.value = listData.length;
+  articles.value = listData;
 
     //处理数据,给数据模型扩展一个属性categoryName,分类名称
     for (let i = 0; i < articles.value.length; i++) {

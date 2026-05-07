@@ -49,7 +49,7 @@ const updateAvatar = async ()=>{
                     :auto-upload="true"
                     action="/api/upload"
                     name="file"
-                    :headers="{'Authorization':tokenStore.token}"
+                    :headers="{'Authorization': encodeURIComponent(tokenStore.token)}"
                     :on-success="uploadSuccess"
                     >
                     <img v-if="imgUrl" :src="imgUrl" class="avatar" />
