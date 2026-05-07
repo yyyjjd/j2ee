@@ -1,6 +1,6 @@
 package com.example.bigeventbackend.controller;
 
-import com.example.bigeventbackend.pojo.User;
+import com.example.bigeventbackend.pojo.Result;
 import com.example.bigeventbackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,29 +12,24 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    // 注册
     @PostMapping("/register")
-    public String register(User user) {
-        User u = userService.findByUsername(user.getUsername());
-        if(u != null) {
-            return "用户名已存在";
+    public Result register(String username, String password, String rePassword) {
+
+        // 基础参数校验
+        if (username == null || username.trim().isEmpty() || password == null || rePassword == null) {
+            return Result.error("用户名或密码不能为空");
         }
-        userService.register(user);
-        return "注册成功";
+
+        if (!password.equals(rePassword)) {
+            return Result.error("两次密码输入不一致");
+        }
+
+        // 调用 Service
+        return userService.register(username, password);
     }
 
-    // 登录
     @PostMapping("/login")
-    public String login(User user) {
-        User u = userService.findByUsername(user.getUsername());
-        if(u == null) return "用户不存在";
-        if(!u.getPassword().equals(user.getPassword())) return "密码错误";
-        return "登录成功";
-    }
-
-    // 获取用户信息
-    @GetMapping("/info/{id}")
-    public User getUserInfo(@PathVariable Integer id) {
-        return userService.findById(id);
+    public Result login(String username, String password) {
+        return userService.login(username, password);
     }
 }
